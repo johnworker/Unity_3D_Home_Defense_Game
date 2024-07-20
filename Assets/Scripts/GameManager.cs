@@ -6,8 +6,18 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public int score = 0;
+    public int playerHealth = 3;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI healthText;
     public GameObject gameOverPanel;
+
+    void Start()
+    {
+        Time.timeScale = 1;
+        gameOverPanel.SetActive(false);
+        UpdateScore(0);
+        UpdateHealth(playerHealth);
+    }
 
     void Update()
     {
@@ -20,7 +30,17 @@ public class GameManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
-        scoreText.text = "Score: " + score;
+        UpdateScore(score);
+    }
+
+    void UpdateScore(int currentScore)
+    {
+        scoreText.text = "Score: " + currentScore;
+    }
+
+    public void UpdateHealth(int currentHealth)
+    {
+        healthText.text = "Health: " + currentHealth;
     }
 
     public void GameOver()
@@ -29,10 +49,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    void RestartGame()
+    public void RestartGame()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
-
